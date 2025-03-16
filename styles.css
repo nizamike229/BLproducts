@@ -1,0 +1,27 @@
+.product-card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+#cartSidebar.open {
+    transform: translateX(0);
+}
+
+#productModal.active {
+    display: flex;
+}
+
+.cart-item-quantity {
+    width: 40px;
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.cart-item-quantity::-webkit-outer-spin-button,
+.cart-item-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} 

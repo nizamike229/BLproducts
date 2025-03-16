@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Белорусские продукты</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'belarus-red': '#CE1720',
+                        'belarus-green': '#007C30',
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-white">
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-belarus-red">Белорусские продукты</h1>
+            <div class="flex items-center gap-4">
+                <button id="cartBtn" class="relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-belarus-red text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                </button>
+                <a href="#" id="whatsappHeader" class="bg-belarus-green text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                    Позвонить
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-gray-50 py-20 mt-16">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-8">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-4 text-belarus-red">Лучшие белорусские продукты</h2>
+                    <p class="text-gray-600 text-lg mb-6">Мы предлагаем широкий ассортимент качественных продуктов от лучших производителей Беларуси. Наша продукция соответствует самым высоким стандартам качества и безопасности.</p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="text-belarus-green text-2xl font-bold mb-2">100%</div>
+                            <div class="text-gray-600">Натуральные ингредиенты</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="text-belarus-red text-2xl font-bold mb-2">10+</div>
+                            <div class="text-gray-600">Лет на рынке</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="text-belarus-green text-2xl font-bold mb-2">500+</div>
+                            <div class="text-gray-600">Довольных клиентов</div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg shadow-md">
+                            <div class="text-belarus-red text-2xl font-bold mb-2">24/7</div>
+                            <div class="text-gray-600">Поддержка клиентов</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <img src="https://fakeimg.pl/600x400" alt="Белорусские продукты" class="rounded-lg shadow-lg w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-20">
+        <h2 class="text-3xl font-bold mb-8 text-center text-belarus-green">Наши продукты</h2>
+        <div id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Products will be rendered here -->
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 mt-10">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-gray-600">
+                    <p id="footerName" class="font-bold">Иван Иванов</p>
+                    <p id="footerPhone">+375 29 123-45-67</p>
+                </div>
+                <a href="#" id="whatsappFooter" class="bg-belarus-green text-white px-6 py-3 rounded-md hover:bg-green-700 transition-colors mt-4 md:mt-0">
+                    Написать в WhatsApp
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Sidebar -->
+    <div id="cartSidebar" class="fixed top-0 right-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50">
+        <div class="p-4">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold">Корзина</h2>
+                <button id="closeCart" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div id="cartItems" class="space-y-4">
+                <!-- Cart items will be rendered here -->
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between items-center mb-4">
+                    <span class="font-bold">Итого:</span>
+                    <span id="cartTotal" class="font-bold">0 BYN</span>
+                </div>
+                <button id="orderBtn" class="w-full bg-belarus-green text-white py-2 rounded-md hover:bg-green-700 transition-colors">
+                    Оформить заказ
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <div class="flex justify-between items-start mb-4">
+                <h3 id="modalTitle" class="text-xl font-bold"></h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <img id="modalImage" src="" alt="" class="w-full h-48 object-cover rounded-md mb-4">
+            <p id="modalDescription" class="text-gray-600 mb-4"></p>
+            <div class="mb-4">
+                <h4 class="font-bold mb-2">Состав:</h4>
+                <p id="modalCompound" class="text-gray-600"></p>
+            </div>
+            <div class="flex justify-between items-center">
+                <span id="modalPrice" class="text-lg font-bold"></span>
+                <button id="modalAddToCart" class="bg-belarus-green text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors">
+                    Добавить в корзину
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
