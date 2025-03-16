@@ -64,11 +64,6 @@ const whatsappHeader = document.getElementById('whatsappHeader');
 const whatsappFooter = document.getElementById('whatsappFooter');
 const footerName = document.getElementById('footerName');
 const footerPhone = document.getElementById('footerPhone');
-const searchInput = document.getElementById('searchInput');
-const mobileSearchInput = document.getElementById('mobileSearchInput');
-const searchToggle = document.getElementById('searchToggle');
-const closeMobileSearch = document.getElementById('closeMobileSearch');
-const mobileSearch = document.getElementById('mobileSearch');
 const sortSelect = document.getElementById('sortSelect');
 const prevPageBtn = document.getElementById('prevPage');
 const nextPageBtn = document.getElementById('nextPage');
@@ -94,7 +89,7 @@ function sortProducts(sortType) {
         default:
             filteredProducts = [...products];
     }
-    currentPage = 1; // Сбрасываем страницу при сортировке
+    currentPage = 1;
     renderProducts();
     updatePagination();
 }
@@ -135,96 +130,6 @@ function renderProducts() {
     `).join('');
 }
 
-// Мобильный поиск
-function toggleMobileSearch() {
-    mobileSearch.classList.toggle('active');
-    if (mobileSearch.classList.contains('active')) {
-        // Сбрасываем позицию скролла
-        window.scrollTo(0, 0);
-        // Блокируем скролл основной страницы
-        document.body.style.overflow = 'hidden';
-        // Фокусируемся на поле ввода
-        mobileSearchInput.focus();
-    } else {
-        // Разблокируем скролл основной страницы
-        document.body.style.overflow = '';
-    }
-}
-
-// Обновляем функцию фильтрации
-function filterProducts(query) {
-    query = query.toLowerCase();
-    filteredProducts = products.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-    );
-    currentPage = 1;
-    
-    // Обновляем результаты поиска в мобильной версии
-    if (mobileSearch.classList.contains('active')) {
-        renderMobileSearchResults(query);
-    } else {
-        renderProducts();
-    }
-    
-    updatePagination();
-}
-
-// Функция для отображения результатов поиска в мобильной версии
-function renderMobileSearchResults(query) {
-    const mobileSearchResults = document.getElementById('mobileSearchResults');
-    
-    if (!query) {
-        mobileSearchResults.innerHTML = `
-            <div class="text-gray-500 text-center py-4">
-                Введите название товара для поиска
-            </div>
-        `;
-        return;
-    }
-
-    const results = products.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-    );
-
-    if (results.length === 0) {
-        mobileSearchResults.innerHTML = `
-            <div class="text-gray-500 text-center py-4">
-                Товары не найдены
-            </div>
-        `;
-        return;
-    }
-
-    mobileSearchResults.innerHTML = results.map(product => `
-        <div class="flex items-center gap-4 p-4 bg-white rounded-lg shadow-sm border border-gray-100" 
-             onclick="selectProduct(${product.id})">
-            <img src="${product.imageURL}" alt="${product.name}" 
-                 class="w-20 h-20 object-cover rounded-md">
-            <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1">${product.name}</h3>
-                <p class="text-gray-600 text-sm mb-2">${product.description}</p>
-                <div class="flex justify-between items-center">
-                    <span class="text-lg font-bold">${product.price.toFixed(0)} ₸</span>
-                    <button 
-                        class="bg-belarus-green text-white px-3 py-1 rounded-md hover:bg-green-700 transition-colors"
-                        onclick="event.stopPropagation(); addToCart(${product.id})"
-                    >
-                        В корзину
-                    </button>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Функция для выбора товара из результатов поиска
-function selectProduct(productId) {
-    showProductModal(productId);
-    toggleMobileSearch();
-}
-
 // Модальное окно продукта
 function showProductModal(productId) {
     currentProduct = products.find(p => p.id === productId);
@@ -254,11 +159,9 @@ function addToCart(productId) {
         };
     }
 
-    // Добавляем эффект пульсации для кнопки корзины
     cartBtn.classList.add('cart-pulse');
     setTimeout(() => cartBtn.classList.remove('cart-pulse'), 300);
 
-    // Показываем уведомление
     showNotification('Товар добавлен в корзину!');
 
     saveCart();
@@ -356,21 +259,13 @@ function showNotification(message) {
     notification.textContent = message;
     document.body.appendChild(notification);
 
-    // Анимация появления
     setTimeout(() => notification.style.transform = 'translateX(0)', 100);
 
-    // Анимация исчезновения
     setTimeout(() => {
         notification.style.transform = 'translateX(100%)';
         setTimeout(() => notification.remove(), 300);
     }, 2000);
 }
-
-// Добавляем обработчик поиска
-searchInput.addEventListener('input', (e) => {
-    filterProducts(e.target.value);
-    mobileSearchInput.value = e.target.value;
-});
 
 // Добавляем обработчики событий
 sortSelect.addEventListener('change', (e) => sortProducts(e.target.value));
@@ -387,25 +282,6 @@ nextPageBtn.addEventListener('click', () => {
         currentPage++;
         renderProducts();
         updatePagination();
-    }
-});
-
-// Обработчики событий
-searchToggle.addEventListener('click', toggleMobileSearch);
-closeMobileSearch.addEventListener('click', toggleMobileSearch);
-
-// Синхронизация поиска на десктопе и мобильном
-mobileSearchInput.addEventListener('input', (e) => {
-    filterProducts(e.target.value);
-    searchInput.value = e.target.value;
-});
-
-// Закрываем мобильный поиск при клике вне поля ввода
-document.addEventListener('click', (e) => {
-    if (mobileSearch.classList.contains('active') && 
-        !mobileSearch.contains(e.target) && 
-        !searchToggle.contains(e.target)) {
-        toggleMobileSearch();
     }
 });
 

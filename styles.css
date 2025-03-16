@@ -99,30 +99,6 @@
     height: 300px;
 }
 
-#searchInput {
-    transition: all 0.3s ease;
-}
-
-#searchInput:focus {
-    box-shadow: 0 0 0 2px rgba(0, 124, 48, 0.2);
-}
-
-/* Анимация для результатов поиска */
-.product-card {
-    transition: all 0.3s ease;
-}
-
-.product-card.hidden {
-    opacity: 0;
-    transform: scale(0.8);
-    pointer-events: none;
-}
-
-/* Добавляем эффект для иконки поиска */
-#searchInput:focus + svg {
-    color: #007C30;
-}
-
 /* Стили для селекта сортировки */
 #sortSelect {
     @apply bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-belarus-green focus:border-transparent transition-all duration-200;
@@ -142,81 +118,6 @@
     @apply text-gray-600 font-medium;
 }
 
-/* Анимация для переключения страниц */
-.product-card {
-    @apply transition-all duration-300;
-}
-
-.product-card.hidden {
-    @apply opacity-0 scale-95;
-}
-
-/* Мобильный поиск */
-#mobileSearch {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    background-color: white;
-    z-index: 50;
-    transform: translateY(100%);
-    transition: transform 0.3s ease-out;
-}
-
-#mobileSearch.active {
-    transform: translateY(0);
-}
-
-#mobileSearchInput {
-    font-size: 16px; /* Предотвращает масштабирование на iOS */
-}
-
-#mobileSearchResults {
-    max-height: calc(100vh - 180px);
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 20px;
-}
-
-#mobileSearchResults > div {
-    transition: transform 0.2s ease-in-out;
-}
-
-#mobileSearchResults > div:active {
-    transform: scale(0.98);
-}
-
-/* Анимация для мобильного поиска */
-@keyframes slideUp {
-    from {
-        transform: translateY(100%);
-    }
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(100%);
-    }
-}
-
-#mobileSearch.active {
-    animation: slideUp 0.3s ease-out forwards;
-}
-
-#mobileSearch:not(.active) {
-    animation: slideDown 0.3s ease-out forwards;
-}
-
 /* Оптимизация для мобильных устройств */
 @media (max-width: 768px) {
     .product-card {
@@ -234,23 +135,5 @@
     
     #pageInfo {
         font-size: 0.9rem;
-    }
-    
-    /* Стили для результатов поиска */
-    #mobileSearchResults > div {
-        margin-bottom: 0.5rem;
-    }
-    
-    #mobileSearchResults img {
-        width: 80px;
-        height: 80px;
-    }
-    
-    #mobileSearchResults h3 {
-        font-size: 1rem;
-    }
-    
-    #mobileSearchResults p {
-        font-size: 0.875rem;
     }
 } 
