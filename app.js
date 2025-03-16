@@ -80,7 +80,7 @@ function renderProducts() {
                 <div class="flex justify-between items-center">
                     <span class="text-lg font-bold">${product.price.toFixed(0)} ₸</span>
                     <button 
-                        class="bg-belarus-green text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors"
+                        class="bg-belarus-green text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors btn-hover-effect"
                         onclick="event.stopPropagation(); addToCart(${product.id})"
                     >
                         В корзину
@@ -119,6 +119,13 @@ function addToCart(productId) {
             quantity: 1
         };
     }
+
+    // Добавляем эффект пульсации для кнопки корзины
+    cartBtn.classList.add('cart-pulse');
+    setTimeout(() => cartBtn.classList.remove('cart-pulse'), 300);
+
+    // Показываем уведомление
+    showNotification('Товар добавлен в корзину!');
 
     saveCart();
     updateCartCount();
@@ -185,8 +192,16 @@ cartBtn.addEventListener('click', () => cartSidebar.classList.add('open'));
 closeCart.addEventListener('click', () => cartSidebar.classList.remove('open'));
 closeModal.addEventListener('click', () => productModal.classList.remove('active'));
 orderBtn.addEventListener('click', openWhatsApp);
-whatsappHeader.addEventListener('click', () => window.open(`${WHATSAPP_BASE_URL}${WHATSAPP_NUMBER}`, '_blank'));
-whatsappFooter.addEventListener('click', () => window.open(`${WHATSAPP_BASE_URL}${WHATSAPP_NUMBER}`, '_blank'));
+whatsappHeader.addEventListener('click', (e) => {
+    e.preventDefault();
+    showNotification('Открываем WhatsApp...');
+    setTimeout(() => window.open(`${WHATSAPP_BASE_URL}${WHATSAPP_NUMBER}`, '_blank'), 500);
+});
+whatsappFooter.addEventListener('click', (e) => {
+    e.preventDefault();
+    showNotification('Открываем WhatsApp...');
+    setTimeout(() => window.open(`${WHATSAPP_BASE_URL}${WHATSAPP_NUMBER}`, '_blank'), 500);
+});
 modalAddToCart.addEventListener('click', () => {
     if (currentProduct) {
         addToCart(currentProduct.id);
@@ -198,6 +213,23 @@ modalAddToCart.addEventListener('click', () => {
 function updateContactInfo() {
     footerName.textContent = `${CONTACT_NAME} ${CONTACT_SURNAME}`;
     footerPhone.textContent = FORMATTED_PHONE;
+}
+
+// Функция для показа уведомлений
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-20 right-4 bg-belarus-green text-white px-6 py-3 rounded-lg shadow-lg transform translate-x-full transition-transform duration-300 z-50';
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    // Анимация появления
+    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+
+    // Анимация исчезновения
+    setTimeout(() => {
+        notification.style.transform = 'translateX(100%)';
+        setTimeout(() => notification.remove(), 300);
+    }, 2000);
 }
 
 // Инициализация
