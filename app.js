@@ -39,6 +39,38 @@ const productsData = {
             "price": 860,
             "description": "Колбаса сырокопченая",
             "compound": "Говядина, свинина, соль, специи, вода"
+        },
+        {
+            "id": 5,
+            "name": "Тестовый товар",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 640,
+            "description": "Тестовый товар",
+            "compound": "Тестовый товар"
+        },
+        {
+            "id": 6,
+            "name": "Тестовый товар 2",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 1700,
+            "description": "Тестовый товар 2",
+            "compound": "Тестовый товар 2"
+        },
+        {
+            "id": 7,
+            "name": "Тестовый товар 3",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 860,
+            "description": "Тестовый товар 3",
+            "compound": "Тестовый товар 3"
+        },
+        {
+            "id": 8,
+            "name": "Тестовый товар 4",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 860,
+            "description": "Тестовый товар 4",
+            "compound": "Тестовый товар 4"
         }
     ]
 };
