@@ -172,6 +172,9 @@ function renderProducts() {
             </div>
         </div>
     `).join('');
+    
+    // Обновляем информацию о страницах после рендеринга
+    updatePagination();
 }
 
 // Модальное окно продукта
@@ -312,20 +315,23 @@ function showNotification(message) {
 }
 
 // Добавляем обработчики событий
-sortSelect.addEventListener('change', (e) => sortProducts(e.target.value));
+sortSelect.addEventListener('change', (e) => {
+    currentPage = 1; // Сбрасываем на первую страницу при сортировке
+    sortProducts(e.target.value);
+});
+
 prevPageBtn.addEventListener('click', () => {
     if (currentPage > 1) {
         currentPage--;
         renderProducts();
-        updatePagination();
     }
 });
+
 nextPageBtn.addEventListener('click', () => {
     const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
     if (currentPage < totalPages) {
         currentPage++;
         renderProducts();
-        updatePagination();
     }
 });
 
