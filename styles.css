@@ -155,6 +155,7 @@
 #mobileSearch {
     height: 100vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 #mobileSearch.active {
@@ -163,6 +164,20 @@
 
 #mobileSearchInput {
     font-size: 16px; /* Предотвращает масштабирование на iOS */
+}
+
+#mobileSearchResults {
+    max-height: calc(100vh - 180px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#mobileSearchResults > div {
+    transition: transform 0.2s ease-in-out;
+}
+
+#mobileSearchResults > div:active {
+    transform: scale(0.98);
 }
 
 /* Анимация для мобильного поиска */
@@ -209,5 +224,23 @@
     
     #pageInfo {
         font-size: 0.9rem;
+    }
+    
+    /* Стили для результатов поиска */
+    #mobileSearchResults > div {
+        margin-bottom: 0.5rem;
+    }
+    
+    #mobileSearchResults img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    #mobileSearchResults h3 {
+        font-size: 1rem;
+    }
+    
+    #mobileSearchResults p {
+        font-size: 0.875rem;
     }
 } 
