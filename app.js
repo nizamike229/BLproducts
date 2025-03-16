@@ -65,6 +65,10 @@ const whatsappFooter = document.getElementById('whatsappFooter');
 const footerName = document.getElementById('footerName');
 const footerPhone = document.getElementById('footerPhone');
 const searchInput = document.getElementById('searchInput');
+const mobileSearchInput = document.getElementById('mobileSearchInput');
+const searchToggle = document.getElementById('searchToggle');
+const closeMobileSearch = document.getElementById('closeMobileSearch');
+const mobileSearch = document.getElementById('mobileSearch');
 const sortSelect = document.getElementById('sortSelect');
 const prevPageBtn = document.getElementById('prevPage');
 const nextPageBtn = document.getElementById('nextPage');
@@ -131,14 +135,22 @@ function renderProducts() {
     `).join('');
 }
 
-// Поиск и фильтрация
+// Мобильный поиск
+function toggleMobileSearch() {
+    mobileSearch.classList.toggle('active');
+    if (mobileSearch.classList.contains('active')) {
+        mobileSearchInput.focus();
+    }
+}
+
+// Обновляем функцию фильтрации
 function filterProducts(query) {
     query = query.toLowerCase();
     filteredProducts = products.filter(product => 
         product.name.toLowerCase().includes(query) ||
         product.description.toLowerCase().includes(query)
     );
-    currentPage = 1; // Сбрасываем страницу при поиске
+    currentPage = 1;
     renderProducts();
     updatePagination();
 }
@@ -287,6 +299,7 @@ function showNotification(message) {
 // Добавляем обработчик поиска
 searchInput.addEventListener('input', (e) => {
     filterProducts(e.target.value);
+    mobileSearchInput.value = e.target.value;
 });
 
 // Добавляем обработчики событий
@@ -304,6 +317,25 @@ nextPageBtn.addEventListener('click', () => {
         currentPage++;
         renderProducts();
         updatePagination();
+    }
+});
+
+// Обработчики событий
+searchToggle.addEventListener('click', toggleMobileSearch);
+closeMobileSearch.addEventListener('click', toggleMobileSearch);
+
+// Синхронизация поиска на десктопе и мобильном
+mobileSearchInput.addEventListener('input', (e) => {
+    filterProducts(e.target.value);
+    searchInput.value = e.target.value;
+});
+
+// Закрываем мобильный поиск при клике вне поля ввода
+document.addEventListener('click', (e) => {
+    if (mobileSearch.classList.contains('active') && 
+        !mobileSearch.contains(e.target) && 
+        !searchToggle.contains(e.target)) {
+        toggleMobileSearch();
     }
 });
 
