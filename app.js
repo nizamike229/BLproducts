@@ -64,15 +64,27 @@ const whatsappHeader = document.getElementById('whatsappHeader');
 const whatsappFooter = document.getElementById('whatsappFooter');
 const footerName = document.getElementById('footerName');
 const footerPhone = document.getElementById('footerPhone');
+const searchInput = document.getElementById('searchInput');
 
 // Состояние приложения
 let products = productsData.products;
+let filteredProducts = [...products];
 let cart = JSON.parse(localStorage.getItem('cart')) || {};
 let currentProduct = null;
 
-// Рендеринг продуктов
+// Поиск и фильтрация
+function filterProducts(query) {
+    query = query.toLowerCase();
+    filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+    );
+    renderProducts();
+}
+
+// Обновляем рендеринг продуктов
 function renderProducts() {
-    productsContainer.innerHTML = products.map(product => `
+    productsContainer.innerHTML = filteredProducts.map(product => `
         <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="showProductModal(${product.id})">
             <img src="${product.imageURL}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
@@ -231,6 +243,11 @@ function showNotification(message) {
         setTimeout(() => notification.remove(), 300);
     }, 2000);
 }
+
+// Добавляем обработчик поиска
+searchInput.addEventListener('input', (e) => {
+    filterProducts(e.target.value);
+});
 
 // Инициализация
 renderProducts();
