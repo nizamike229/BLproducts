@@ -65,26 +65,54 @@ const whatsappFooter = document.getElementById('whatsappFooter');
 const footerName = document.getElementById('footerName');
 const footerPhone = document.getElementById('footerPhone');
 const searchInput = document.getElementById('searchInput');
+const sortSelect = document.getElementById('sortSelect');
+const prevPageBtn = document.getElementById('prevPage');
+const nextPageBtn = document.getElementById('nextPage');
+const pageInfo = document.getElementById('pageInfo');
 
 // Состояние приложения
 let products = productsData.products;
 let filteredProducts = [...products];
 let cart = JSON.parse(localStorage.getItem('cart')) || {};
 let currentProduct = null;
+let currentPage = 1;
+const itemsPerPage = 8;
 
-// Поиск и фильтрация
-function filterProducts(query) {
-    query = query.toLowerCase();
-    filteredProducts = products.filter(product => 
-        product.name.toLowerCase().includes(query) ||
-        product.description.toLowerCase().includes(query)
-    );
+// Сортировка
+function sortProducts(sortType) {
+    switch(sortType) {
+        case 'price-asc':
+            filteredProducts.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            filteredProducts.sort((a, b) => b.price - a.price);
+            break;
+        default:
+            filteredProducts = [...products];
+    }
+    currentPage = 1; // Сбрасываем страницу при сортировке
     renderProducts();
+    updatePagination();
+}
+
+// Пагинация
+function updatePagination() {
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    pageInfo.textContent = `Страница ${currentPage} из ${totalPages}`;
+    prevPageBtn.disabled = currentPage === 1;
+    nextPageBtn.disabled = currentPage === totalPages;
+}
+
+function getCurrentPageProducts() {
+    const start = (currentPage - 1) * itemsPerPage;
+    const end = start + itemsPerPage;
+    return filteredProducts.slice(start, end);
 }
 
 // Обновляем рендеринг продуктов
 function renderProducts() {
-    productsContainer.innerHTML = filteredProducts.map(product => `
+    const currentPageProducts = getCurrentPageProducts();
+    productsContainer.innerHTML = currentPageProducts.map(product => `
         <div class="product-card bg-white rounded-lg shadow-md overflow-hidden cursor-pointer" onclick="showProductModal(${product.id})">
             <img src="${product.imageURL}" alt="${product.name}" class="w-full h-48 object-cover">
             <div class="p-4">
@@ -101,6 +129,18 @@ function renderProducts() {
             </div>
         </div>
     `).join('');
+}
+
+// Поиск и фильтрация
+function filterProducts(query) {
+    query = query.toLowerCase();
+    filteredProducts = products.filter(product => 
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query)
+    );
+    currentPage = 1; // Сбрасываем страницу при поиске
+    renderProducts();
+    updatePagination();
 }
 
 // Модальное окно продукта
@@ -247,6 +287,24 @@ function showNotification(message) {
 // Добавляем обработчик поиска
 searchInput.addEventListener('input', (e) => {
     filterProducts(e.target.value);
+});
+
+// Добавляем обработчики событий
+sortSelect.addEventListener('change', (e) => sortProducts(e.target.value));
+prevPageBtn.addEventListener('click', () => {
+    if (currentPage > 1) {
+        currentPage--;
+        renderProducts();
+        updatePagination();
+    }
+});
+nextPageBtn.addEventListener('click', () => {
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    if (currentPage < totalPages) {
+        currentPage++;
+        renderProducts();
+        updatePagination();
+    }
 });
 
 // Инициализация

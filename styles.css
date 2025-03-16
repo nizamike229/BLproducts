@@ -121,4 +121,32 @@
 /* Добавляем эффект для иконки поиска */
 #searchInput:focus + svg {
     color: #007C30;
+}
+
+/* Стили для селекта сортировки */
+#sortSelect {
+    @apply bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-belarus-green focus:border-transparent transition-all duration-200;
+}
+
+/* Стили для кнопок пагинации */
+.pagination-btn {
+    @apply bg-white border border-gray-300 rounded-md px-4 py-2 text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-belarus-green focus:border-transparent transition-all duration-200;
+}
+
+.pagination-btn:disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+/* Стили для информации о странице */
+#pageInfo {
+    @apply text-gray-600 font-medium;
+}
+
+/* Анимация для переключения страниц */
+.product-card {
+    @apply transition-all duration-300;
+}
+
+.product-card.hidden {
+    @apply opacity-0 scale-95;
 } 

@@ -84,9 +84,32 @@
 
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-20">
-        <h2 class="text-3xl font-bold mb-8 text-center text-belarus-green">Наши продукты</h2>
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-belarus-green">Наши продукты</h2>
+            <div class="flex items-center gap-4 mt-4 md:mt-0">
+                <select id="sortSelect" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-belarus-green">
+                    <option value="default">По умолчанию</option>
+                    <option value="price-asc">По цене (возрастание)</option>
+                    <option value="price-desc">По цене (убывание)</option>
+                </select>
+            </div>
+        </div>
         <div id="products" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             <!-- Products will be rendered here -->
+        </div>
+        <!-- Пагинация -->
+        <div class="flex justify-center items-center gap-2 mt-8">
+            <button id="prevPage" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            <span id="pageInfo" class="px-4 py-2">Страница 1 из 1</span>
+            <button id="nextPage" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
         </div>
     </main>
 
