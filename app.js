@@ -71,6 +71,18 @@ const productsData = {
             "price": 860,
             "description": "Тестовый товар 4",
             "compound": "Тестовый товар 4"
+        },
+        {
+            "id": 9,
+            "name": "Тестовый товар 5",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 860,
+        },
+        {
+            "id": 10,
+            "name": "Тестовый товар 6",
+            "imageURL": "https://fakeimg.pl/400x300",
+            "price": 860,
         }
     ]
 };
