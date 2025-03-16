@@ -139,7 +139,15 @@ function renderProducts() {
 function toggleMobileSearch() {
     mobileSearch.classList.toggle('active');
     if (mobileSearch.classList.contains('active')) {
+        // Сбрасываем позицию скролла
+        window.scrollTo(0, 0);
+        // Блокируем скролл основной страницы
+        document.body.style.overflow = 'hidden';
+        // Фокусируемся на поле ввода
         mobileSearchInput.focus();
+    } else {
+        // Разблокируем скролл основной страницы
+        document.body.style.overflow = '';
     }
 }
 

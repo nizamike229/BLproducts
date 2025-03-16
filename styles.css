@@ -153,9 +153,18 @@
 
 /* Мобильный поиск */
 #mobileSearch {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 100vh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    background-color: white;
+    z-index: 50;
+    transform: translateY(100%);
+    transition: transform 0.3s ease-out;
 }
 
 #mobileSearch.active {
@@ -170,6 +179,7 @@
     max-height: calc(100vh - 180px);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 20px;
 }
 
 #mobileSearchResults > div {
